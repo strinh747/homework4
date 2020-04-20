@@ -1,0 +1,30 @@
+.container {
+    margin-top: 40px;
+    padding: 40px;
+    text-align: center;
+
+}
+
+#questionpage, #resultspage, #scorespage {
+    display: none;
+}
+
+
+button {
+    display: inline;
+    background-color: purple;
+    border-radius: 12px;
+    color: white;
+}
+
+#timer {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+}
+
+#viewscores {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+}
