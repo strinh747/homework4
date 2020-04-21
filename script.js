@@ -16,7 +16,6 @@ var rerestartbtn = document.querySelector("#rerestartquiz").children[0].children
 var viewscoresbtn = document.querySelector("#viewscores").children[0];
 var resetscoresbtn = document.querySelector("#resetscores");
 var topscoresParent = document.querySelector("#topscoresParent");
-var liscore;
 
 var timeInterval;
 var index = 0;
@@ -28,40 +27,40 @@ timeleftmsg.textContent = timeleft;
 
 
 var quizquestions = [
-    "question1",
-    "question2",
-    "question3",
-    "question4",
-    "question5",
-    "question6",
-    "question7",
-    "question8",
-    "question9",
-    "question10"
+    "Commonly used data types DO NOT include:",
+    "The condition in an if / else statement is enclosed within ____.",
+    "Arrays in JavaScript can be used to store ____.",
+    "String values must be enclosed within ____ when being assigned to variables.",
+    "A very useful tool used during development and debugging for printing content to the debugger is:",
+    "Commonly used data types DO NOT include:",
+    "The condition in an if / else statement is enclosed within ____.",
+    "Arrays in JavaScript can be used to store ____.",
+    "String values must be enclosed within ____ when being assigned to variables.",
+    "A very useful tool used during development and debugging for printing content to the debugger is:"
 ];
 var quizMC = {
-    Question1: ["MC1", "MC2", "MC3", "MC4"],
-    Question2: ["MC1", "MC2", "MC3", "MC4"],
-    Question3: ["MC1", "MC2", "MC3", "MC4"],
-    Question4: ["MC1", "MC2", "MC3", "MC4"],
-    Question5: ["MC1", "MC2", "MC3", "MC4"],
-    Question6: ["MC1", "MC2", "MC3", "MC4"],
-    Question7: ["MC1", "MC2", "MC3", "MC4"],
-    Question8: ["MC1", "MC2", "MC3", "MC4"],
-    Question9: ["MC1", "MC2", "MC3", "MC4"],
-    Question10: ["MC1", "MC2", "MC3", "MC4"]
+    Question1: ["strings", "booleans", "alerts", "numbers"],
+    Question2: ["quotes", "curly brackets", "parentheses", "square brackets"],
+    Question3: ["numbers and strings","other arrays","booleans","all of the above"],
+    Question4: ["commas", "curly brackets", "quotes", "parentheses"],
+    Question5: ["JavaScript", "terminal / bash", "for loops", "console.log"],
+    Question6: ["strings", "booleans", "alerts", "numbers"],
+    Question7: ["quotes", "curly brackets", "parentheses", "square brackets"],
+    Question8: ["numbers and strings","other arrays","booleans","all of the above"],
+    Question9: ["commas", "curly brackets", "quotes", "parentheses"],
+    Question10: ["JavaScript", "terminal / bash", "for loops", "console.log"],
 };
 var quizMCcorrect = [
-    "question1",
-    "question2",
-    "question3",
-    "question4",
-    "question5",
-    "question6",
-    "question7",
-    "question8",
-    "question9",
-    "question10"
+    "alerts",
+    "parentheses",
+    "all of the above",
+    "quotes",
+    "console.log",
+    "alerts",
+    "parentheses",
+    "all of the above",
+    "quotes",
+    "console.log"
 ];
 
 init();
@@ -77,7 +76,6 @@ function rendertopscores() {
     for (i = 0; i < topscores.length; i++) {
         topscore = topscores[i];
         var li = document.createElement("li");
-        li.setAttribute("class","liscore");
         li.textContent = topscore;
         topscoreslist.appendChild(li);
     }
@@ -88,6 +86,7 @@ function storeTopScores() {
 function startQuiz(event) {
     event.preventDefault();
     timeleftmsg.textContent = 75;
+    reset();
     timer();
     questionpageDiv.style.display = "inline-block";
     titlepageDiv.style.display = "none";
@@ -103,17 +102,18 @@ function loadQuestion() {
     multiplechoicesDiv.children[1].textContent = currentqx[1];
     multiplechoicesDiv.children[2].textContent = currentqx[2];
     multiplechoicesDiv.children[3].textContent = currentqx[3];
-    index++;
 }
 function endQuiz() {
     clearInterval(timeInterval);
     questionpageDiv.style.display = "none";
     resultspageDiv.style.display = "inline";
     resultspageDiv.children[1].children[0].children[0].textContent = "Your total score is " + score + ". Enter your initials below to find out your ranking!";
-    reset();
+    
 }
 function feedback() {
-    var qxresponse = event.currentTarget;
+    var qxresponse = event.target.textContent;
+    console.log(quizMCcorrect[index]);
+    console.log(event.target.textContent);
     if (qxresponse === quizMCcorrect[index]) {
         feedbackEl.children[1].textContent = "Correct";
         score++;
@@ -121,6 +121,7 @@ function feedback() {
     else {
         feedbackEl.children[1].textContent = "Wrong";
     }
+    index++;
     feedbacktimer();
 }
 function timer() {
@@ -146,7 +147,6 @@ function feedbacktimer() {
 function submitresults() {
     var li = document.createElement("li");
     li.textContent = initialsInput.value + ": " + score + " points";
-    li.setAttribute("class","liscore");
     topscores.push(li.textContent);
     topscoreslist.appendChild(li); 
     resultspageDiv.style.display = "none";
@@ -166,13 +166,11 @@ function reset() {
 }
 function resetscores() {
     topscores = [];
-    lis = document.getElementsByTagName("li");
-    for (i=0; i < lis.length; i++) {
-        if (lis[i].matches(".liscore")) {
-            lis[i].parentNode.removeChild(lis[i])
-        }
-    };
-    
+    ts = document.getElementById("topscores");
+    for (i=0; i < i + ts.children.length; i++) {
+        ts.removeChild(ts.children[0])
+    }; 
+    storeTopScores();
 }
 
 startbtn.addEventListener("click", startQuiz);
@@ -180,7 +178,7 @@ restartbtn.addEventListener("click", startQuiz);
 rerestartbtn.addEventListener("click", startQuiz);
 multiplechoicesDiv.addEventListener("click", function(event) {
     event.preventDefault();
-    
+
     if(event.target.matches("button")) {
         feedback();
         if (index < quizquestions.length) {
