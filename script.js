@@ -1,9 +1,9 @@
 var startbtn = document.querySelector("#startquiz").children[0].children[0];
-var container = document.querySelector(".container");
 var multiplechoicesDiv = document.querySelector("#multiplechoices");
 var titlepageDiv = document.querySelector("#titlepage");
 var questionpageDiv = document.querySelector("#questionpage");
 var resultspageDiv = document.querySelector("#resultspage");
+var scorespageDiv = document.querySelector("#scorespage");
 var questionEl = document.querySelector("#question").children[0];
 var restartbtn = document.querySelector("#restartquiz").children[0].children[1];
 var feedbackEl = document.querySelector("#feedback");
@@ -11,11 +11,9 @@ var timeleftmsg = document.querySelector("#secondsleft");
 var initialsInput = document.querySelector("#initials");
 var submitresultsbtn = document.querySelector("#submitresults");
 var topscoreslist = document.querySelector("#topscores");
-var scorespageDiv = document.querySelector("#scorespage");
 var rerestartbtn = document.querySelector("#rerestartquiz").children[0].children[1];
 var viewscoresbtn = document.querySelector("#viewscores").children[0];
 var resetscoresbtn = document.querySelector("#resetscores");
-var topscoresParent = document.querySelector("#topscoresParent");
 
 var timeInterval;
 var index = 0;
@@ -24,7 +22,6 @@ var feedbacktimeleft = 2;
 var score = 0;
 var topscores = [];
 timeleftmsg.textContent = timeleft;
-
 
 var quizquestions = [
     "Commonly used data types DO NOT include:",
@@ -120,6 +117,7 @@ function feedback() {
     }
     else {
         feedbackEl.children[1].textContent = "Wrong";
+        timeleft-=5;
     }
     index++;
     feedbacktimer();
@@ -167,9 +165,7 @@ function reset() {
 function resetscores() {
     topscores = [];
     ts = document.getElementById("topscores");
-    for (i=0; i < i + ts.children.length; i++) {
-        ts.removeChild(ts.children[0])
-    }; 
+    document.querySelector("#topscores").innerHTML="";
     storeTopScores();
 }
 
@@ -192,5 +188,4 @@ multiplechoicesDiv.addEventListener("click", function(event) {
 submitresultsbtn.addEventListener("click", submitresults);
 viewscoresbtn.addEventListener("click", viewscores);
 resetscoresbtn.addEventListener("click",resetscores);
-
 

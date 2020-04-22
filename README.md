@@ -1,1 +1,3 @@
-# homework4
+# Homework 04 Web APIs: Code Quiz
+
+This app is a timed code quiz with multiple-choice questions. It runs in the browser and features dynamically updated HTML and CSS powered by JavaScript code. It also features a clean and polished user interface and is responsive. The quiz is timed and gives feedback per question. If user responds correct, user gets 1 point. If the user answers incorrectly time is subtracted. User may save initials and score. Scores are stored and shown, and the list can be reset.
